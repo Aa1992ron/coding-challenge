@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from sites import views
 
 urlpatterns = [
+	url(r'^$', include('sites.urls')),
 	url(r'^admin/', admin.site.urls),
 	url(r'^sites/', include('sites.urls')),
+	url(r'^delete/(?P<site_id>[0-9]+)/$', views.delete_site, name='delete_site')
 ]

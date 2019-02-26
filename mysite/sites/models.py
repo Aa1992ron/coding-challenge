@@ -4,3 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+
+class Sites(models.Model):
+	website_title = models.CharField(max_length=100)
+	hits = models.PositiveIntegerField()

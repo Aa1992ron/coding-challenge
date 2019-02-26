@@ -1,5 +1,38 @@
 {% extends 'sites/layout.html' %}
 
 {% block content %}
-<h3 class='center-align blue lighten-3'>Sites go here</h3>
+<div class='center-align'>Add a link: 
+	<form method="post">
+		{% csrf_token %}
+		<input type="text" name="new_site_name">
+		<input type="submit" value="Add">
+	</form>
+</div>
+<table>
+	<thead>
+		<tr>
+			<th>Site Name</th>
+			<th>Hits</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+
+	<tbody>
+
+		{% for site in sites %}
+			<tr>
+				<td>{{ site.website_title }}</td>
+				<td>{{ site.hits }}</td>
+				<td>Edit btn goes here</td>
+				<td>
+					<form action="{% url 'delete_site' site_id=site.id %}" method="POST">
+							{% csrf_token %}
+						<input class="btn" type="submit" value="Delete"/>
+					</form>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock %}
