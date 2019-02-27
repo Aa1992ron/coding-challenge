@@ -8,10 +8,36 @@
 		<input type="submit" value="Add">
 	</form>
 </div>
+<script type="text/javascript">
+
+		$(document).ready(function(){
+			console.log("BOOM");
+			var edit_btn_elts = document.getElementsByClassName("edit_button");
+			for(var i = 0; i < edit_btn_elts.length; i++){
+				edit_btn_elts[i].addEventListener("click", toggle_save, false);
+			}
+		});
+		//simple function that activates the ability to change a site name
+		var toggle_save = function(event){
+			console.log("Reached handler");
+			var siblings = ($(event.target).parent()).siblings();
+			console.log(siblings.length);
+			//swap the visibility of the form/table data item
+			
+			var prev_name = siblings[1].children[0];
+			var input_name = siblings[0][0];
+
+			prev_name.style.display = "none";
+			input_name.style.display = "";
+			input_name.style.background = "#ffcdd2";
+			siblings[2].style.visibility = "visible";		
+		}
+	</script>
 <table>
 	<thead>
 		<tr>
 			<th>Site Name</th>
+			<th></th>
 			<th>Hits</th>
 			<th>Edit</th>
 			<th>Delete</th>
@@ -22,13 +48,29 @@
 
 		{% for site in sites %}
 			<tr>
-				<td>{{ site.website_title }}</td>
+				<form action="{% url 'rename_site' site_id=site.id %}" method="POST">
+					<td>
+						<div>{{ site.website_title }}</div>
+						<input style="display:none;" name="site_title" type="text" value="{{ site.website_title }}">
+					</td>
+					
+					<td style="visibility:hidden;">
+						
+								{% csrf_token %}
+							<input class="btn blue" type="submit" value="Save"/>
+						
+					</td>
+				</form>
 				<td>{{ site.hits }}</td>
-				<td>Edit btn goes here</td>
+				<td>
+					<button class="btn green edit_button">
+							Edit
+					</button>
+				</td>
 				<td>
 					<form action="{% url 'delete_site' site_id=site.id %}" method="POST">
 							{% csrf_token %}
-						<input class="btn" type="submit" value="Delete"/>
+						<input class="btn red" type="submit" value="Delete"/>
 					</form>
 				</td>
 			</tr>
@@ -36,3 +78,4 @@
 	</tbody>
 </table>
 {% endblock %}
+

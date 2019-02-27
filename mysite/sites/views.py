@@ -12,7 +12,6 @@ def index(request):
 	#return HttpResponse('HELLO')
 	if request.method == 'POST':
 		form_name = request.POST.get('new_site_name')
-		print(form_name)
 		site = Sites()
 		site.website_title = form_name
 		site.hits = 0
@@ -32,11 +31,21 @@ def delete_site(request, site_id=None):
 	site = Sites.objects.get(id=site_id)
 	site.delete()
 
-	sites = Sites.objects.all()[:15]
+	#sites = Sites.objects.all()[:15]
 
-	context = {
-		'title': 'Help grow the web with referrals!!',
-		'sites': sites,
-	}
+	# context = {
+	# 	'title': 'Help grow the web with referrals!!',
+	# 	'sites': sites,
+	# }
 
+	return redirect('/')
+
+def rename_site(request, site_id=None):
+	if request.method == 'POST':
+		print("GIGGITY")
+		site = Sites.objects.get(id=site_id)
+		site.website_title = request.POST.get('site_title')
+		site.save()
+	#activate the save button and make the field editable
+	#site.save()
 	return redirect('/')

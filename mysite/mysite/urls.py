@@ -21,5 +21,6 @@ urlpatterns = [
 	url(r'^$', include('sites.urls')),
 	url(r'^admin/', admin.site.urls),
 	url(r'^sites/', include('sites.urls')),
-	url(r'^delete/(?P<site_id>[0-9]+)/$', views.delete_site, name='delete_site')
+	url(r'^delete/(?P<site_id>[0-9]+)/$', views.delete_site, name='delete_site'),
+    url(r'^edit/(?P<site_id>[0-9]+)/$', views.rename_site, name='rename_site'),
 ]
