@@ -23,6 +23,6 @@ urlpatterns = [
 	url(r'^sites/', include('sites.urls')),
 	url(r'^delete/(?P<site_id>[0-9]+)/$', views.delete_site, name='delete_site'),
     url(r'^edit/(?P<site_id>[0-9]+)/$', views.rename_site, name='rename_site'),
-    url(r'^landing/(?P<site_id>[0-9]+)/(?P<site_name>[a-zA-Z0-9 ]+)$', views.landing, name='landing'),
+    url(r'^landing/(?P<site_id>[0-9]+)/(?P<site_name>[a-zA-Z0-9_ ]+)$', views.landing, name='landing'),
     url(r'^redirect_home/$', views.home, name='home'),
 ]
