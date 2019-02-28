@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+os.environ.get('BASE_IRI', 'localhost')
 
 # Application definition
 
