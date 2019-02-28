@@ -50,7 +50,8 @@
 			<tr>
 				<form action="{% url 'rename_site' site_id=site.id %}" method="POST">
 					<td>
-						<div>{{ site.website_title }}</div>
+						<a href="{% url 'landing' site_id=site.id site_name=site.website_title %}" method="POST">
+							{{ site.website_title }}</a>
 						<input style="display:none;" name="site_title" type="text" value="{{ site.website_title }}">
 					</td>
 					

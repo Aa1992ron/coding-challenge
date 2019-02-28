@@ -22,14 +22,16 @@ def index(request):
 	context = {
 		'title': 'Help grow the web with referrals!!',
 		'sites': sites,
+		'link_text': '',
 	}
 
 	return render(request, 'sites/index.html', context)
 
 def delete_site(request, site_id=None):
 
-	site = Sites.objects.get(id=site_id)
-	site.delete()
+	if site_id != None:
+		site = Sites.objects.get(id=site_id)
+		site.delete()
 
 	#sites = Sites.objects.all()[:15]
 
@@ -48,4 +50,21 @@ def rename_site(request, site_id=None):
 		site.save()
 	#activate the save button and make the field editable
 	#site.save()
+	return redirect('/')
+
+def landing(request, site_id=None, site_name=None):
+	site = Sites.objects.get(id=site_id)
+	site.hits += 1
+	site.save()
+	display_string = "Welcome to the site that says: "+site.website_title+"!"
+
+
+	context = {
+		'title': display_string,
+		'link_text': 'Back to Homepage'
+	}
+
+	return render(request, 'sites/layout.html', context)
+
+def home(request):
 	return redirect('/')
