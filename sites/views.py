@@ -7,12 +7,14 @@ from django.http import HttpResponse
 from .models import Sites
 from django.shortcuts import redirect, reverse
 
+import re
+
 # Create your views here.
 def index(request):
 	
 	if request.method == 'POST':
 		form_name = request.POST.get('new_site_name')
-		if form_name != "":
+		if form_name != "" and is_valid_sitename(form_name):
 			site = Sites()
 			site.website_title = form_name
 			site.hits = 0
@@ -40,7 +42,7 @@ def delete_site(request, site_id=None):
 def rename_site(request, site_id=None):
 	if request.method == 'POST':
 		new_site_title = request.POST.get('site_title')
-		if new_site_title != "":
+		if new_site_title != "" and is_valid_sitename(form_name):
 			site = Sites.objects.get(id=site_id)
 			site.website_title = new_site_title
 			site.save()
@@ -64,3 +66,6 @@ def landing(request, site_id=None, site_name=None):
 #simple method needed to make the back button work
 def home(request):
 	return redirect('/')
+
+def is_valid_sitename(name):
+	return re.match('^[a-zA-Z0-9_ ]+$', name) is not None
